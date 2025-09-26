@@ -1,0 +1,16 @@
+<%- include('includes/header') %>
+
+<div class="container">
+    <h2>Edit Task</h2>
+    <form action="/edit/<%= task.id %>" method="POST">
+        <input type="text" name="task" value="<%= task.task %>" required>
+        <select name="priority">
+            <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+            <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+            <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+        </select>
+        <button type="submit">Update Task</button>
+    </form>
+</div>
+
+<%- include('includes/footer') %>

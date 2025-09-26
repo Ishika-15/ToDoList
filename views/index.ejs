@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+     <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+
+    <main>
+        <% if (query.error === 'empty') { %>
+            <p class="alert">Please enter a task!</p>
+        <% } %>
+
+        <form action="/add" method="POST" class="todo-form">
+            <input type="text" name="task" placeholder="New Task">
+            <select name="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit">Add</button>
+        </form>
+
+        <form action="/" method="GET" class="filter-form">
+            <label for="priority">Filter by Priority:</label>
+            <select name="priority" onchange="this.form.submit()">
+                <option value="">All</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </form>
+
+        <ul class="todo-list">
+            <% todos.forEach(todo => { %>
+                <li>
+                    <form action="/edit/<%= todo.id %>?_method=PUT" method="POST" class="edit-form">
+                        <input type="text" name="task" value="<%= todo.task %>">
+                        <select name="priority">
+                            <option value="low" <%= todo.priority === 'low' ? 'selected' : '' %>>Low</option>
+                            <option value="medium" <%= todo.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+                            <option value="high" <%= todo.priority === 'high' ? 'selected' : '' %>>High</option>
+                        </select>
+                        <button type="submit">Save</button>
+                    </form>
+                    <form action="/delete/<%= todo.id %>?_method=DELETE" method="POST" class="delete-form">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </main>
+
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>
