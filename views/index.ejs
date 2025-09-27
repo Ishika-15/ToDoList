@@ -13,18 +13,18 @@
             <p class="alert">Please enter a task!</p>
         <% } %>
 
-        <form action="/add" method="POST" class="todo-form">
-            <input type="text" name="task" placeholder="New Task">
+        <form action="/add" method="POST" class="task-input-box">
+            <input type="text" name="task" placeholder="What's next on the list?">
             <select name="priority">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
-            <button type="submit">Add</button>
+            <button type="submit">Add Task</button>
         </form>
 
-        <form action="/" method="GET" class="filter-form">
-            <label for="priority">Filter by Priority:</label>
+        <form action="/" method="GET" class="priority-selector">
+            <label for="priority">Sort tasks by urgency:</label>
             <select name="priority" onchange="this.form.submit()">
                 <option value="">All</option>
                 <option value="low">Low</option>
@@ -33,20 +33,20 @@
             </select>
         </form>
 
-        <ul class="todo-list">
+        <ul class="tasks-master-list">
             <% todos.forEach(todo => { %>
                 <li>
-                    <form action="/edit/<%= todo.id %>?_method=PUT" method="POST" class="edit-form">
+                    <form action="/edit/<%= todo.id %>?_method=PUT" method="POST" class="task-editor">
                         <input type="text" name="task" value="<%= todo.task %>">
                         <select name="priority">
                             <option value="low" <%= todo.priority === 'low' ? 'selected' : '' %>>Low</option>
                             <option value="medium" <%= todo.priority === 'medium' ? 'selected' : '' %>>Medium</option>
                             <option value="high" <%= todo.priority === 'high' ? 'selected' : '' %>>High</option>
                         </select>
-                        <button type="submit">Save</button>
+                        <button type="submit">Update</button>
                     </form>
                     <form action="/delete/<%= todo.id %>?_method=DELETE" method="POST" class="delete-form">
-                        <button type="submit">Delete</button>
+                        <button type="submit">Remove</button>
                     </form>
                 </li>
             <% }) %>
